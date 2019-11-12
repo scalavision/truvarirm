@@ -15,7 +15,7 @@ To autoinsert `giab_report.txt` results into Truvari Spreadsheet template, downl
 chmod +x truvarirm
 ```
 
-NB! You need to have java installed to be able to run it.
+NB! You need to have java 8 installed to be able to run it. (java versions above 8 might also work, it's not been tested though)
 
 ## Truvari Report Manager command example
 
