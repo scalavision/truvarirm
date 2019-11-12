@@ -23,6 +23,7 @@ You can either download a prebuilt binary, or build from source.
 
 ```bash
 chmod +x truvarirm
+./truvarirm
 ```
 
 #### build from source
