@@ -15,6 +15,8 @@ This repository uses ``git lfs``. After ``git clone``, you  should run ``git lfs
 
 ### Installation procedure
 
+You can either download a prebuilt binary, or build from source.
+
 #### Download the prebuilt tool (binary):
 
 [bin/truvarirm](bin/truvarirm)
