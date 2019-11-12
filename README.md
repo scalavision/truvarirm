@@ -44,7 +44,7 @@ To make a selfrunnable binary:
 cd build
 ./make_runnable_jar.sh
 cd ../bin
-chmod +x truvarirm 
+./truvarirm
 ```
 
 ## Truvari Report Manager command example
