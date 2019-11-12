@@ -44,11 +44,11 @@ Look at [run.sh](run.sh) to see an example on how to use it.
 
 ## Truvari Pipeline tool
 
-A script that runs truvari on vcfs
+A rather specialised script that runs truvari idempotantly on vcfs. This is not portable, as there are hardcoded paths and dependencies on not public available tools in there. Probably not valuable for others. 
 
-* [scripts/truvari.sh](scripts/truvari.sh)
+* [scripts/standardize.sh](scripts/standardize.sh)
 
-## Rationale
+### Rationale
 
 Runs truvari on vcf samples
 
