@@ -32,7 +32,7 @@ First you need to install `sbt`.
 Then issue the following commands:
 
 ```bash
-git clone https://github.com:scalavision/truvarirm
+git clone https://github.com/scalavision/truvarirm
 cd truvarirm
 # Will take some time first time you run this command
 # because it downloads all dependencies
