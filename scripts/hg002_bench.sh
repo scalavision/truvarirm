@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
-set -x
+# set -x
+# the test for INS will fail and exit the script, need to find a better way of handling this
 # set -euo pipefail
 
 parseArgs () {
   local OPTIND opt
+
+  if [ "$#" == 0 ]; then
+    help; exit 0
+  fi
+
   while getopts g:d:s:f: opt; do
     case "$opt" in
       g) GOLD="$OPTARG";;
@@ -17,22 +23,17 @@ parseArgs () {
   done
   shift $((OPTIND - 1))
 
-  # Did not match any arguments
-  if [ "$#" == 0 ]; then
-    help
-  else
-    if [ -z "$GOLD" ]; then
-      echo "Path to gold standard folder missing: -g <your path>"
-    fi 
-    if [ -z "$REF" ]; then
-      echo "Path to reference fasta file missing: -f <path to fasta file>"
-    fi
-    if [ -z "$SAMPLE_DIR" ]; then
-      echo "Path to samples dir missing: -d <path to sample dir>"
-    fi
-    if [ -z "$SAMPLE_ID" ]; then
-      echo "Path to samples dir missing: -s <path to sample dir>"
-    fi
+  if [ -z "$GOLD" ]; then
+    echo "Path to gold standard folder missing: -g <your path>"
+  fi 
+  if [ -z "$REF" ]; then
+    echo "Path to reference fasta file missing: -f <path to fasta file>"
+  fi
+  if [ -z "$SAMPLE_DIR" ]; then
+    echo "Path to samples dir missing: -d <path to sample dir>"
+  fi
+  if [ -z "$SAMPLE_ID" ]; then
+    echo "Path to samples dir missing: -s <path to sample dir>"
   fi
 
 }
@@ -49,7 +50,7 @@ splitOnSvType() {
   grep '#' ./"$BASE".vcf > "$BASE"_"$SVTYPE".vcf
   grep -v '#' ./"$BASE".vcf | grep SVTYPE="$SVTYPE" > "$BASE"_TMP_"$SVTYPE".vcf
 
-  if [ -s "$BASE"_TMP_"$SVTYPE".vcf ];then
+  if [ -s "$BASE"_TMP_"$SVTYPE".vcf ]; then
     cat "$BASE"_TMP_"$SVTYPE".vcf >> "$BASE"_"$SVTYPE".vcf
     bgzip "$BASE"_"$SVTYPE".vcf
     tabix -p vcf "$BASE"_"$SVTYPE".vcf.gz
@@ -80,7 +81,7 @@ runTruvari() {
   rm -rf ./result
   mkdir ./result
 
-  for f in "$SAMPLE_DIR"/*"${SAMPLE_ID}"*std_telocent.vcf; do
+  for f in "$SAMPLE_DIR"/*"${SAMPLE_ID}"*std.vcf; do
     FILE=${f##*/}
     BASE=${FILE%%_std*.*}
     rm -rf "$BASE"
@@ -100,4 +101,3 @@ runTruvari() {
 parseArgs "$@"
 GOLD_BED="$GOLD"/HG002_SVs_Tier1_v0.6.bed
 runTruvari
-
