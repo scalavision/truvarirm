@@ -9,9 +9,10 @@ SOFFICE="${HOME}"/.nix-profile/bin/soffice
 OUT="${HOME}"/tmp/report_ins_and_del_with_filters.ods
 #TRUVARI_TEMPLATE=$HOME/stash/workspace/templates/truvari_template.ods
 TRUVARI_TEMPLATE="${HOME}"/Projects/homegrown/truvarirm/truvari_report_template.ods
-BASE="/stash/workspace/results/vcpipe-sv-run-2020_04_01_1330/result"
-SAMPLE="Diag-wgsTest350bp-HG002C2350bp400M-PM"
-
+# BASE="/stash/workspace/results/vcpipe-sv-run-2020_04_01_1330/result"
+# SAMPLE="Diag-wgsTest350bp-HG002C2350bp400M-PM"
+SAMPLE=$1
+BASE="/stash/workspace/results/${SAMPLE}/result"
 ./bin/truvarirm \
   --soffice $SOFFICE \
   --truvariTemplate $TRUVARI_TEMPLATE \

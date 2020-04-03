@@ -81,9 +81,10 @@ runTruvari() {
   rm -rf ./result
   mkdir ./result
 
-  for f in "$SAMPLE_DIR"/*"${SAMPLE_ID}"*std.vcf; do
-    FILE=${f##*/}
-    BASE=${FILE%%_std*.*}
+  for f in "$SAMPLE_DIR"/*"${SAMPLE_ID}"*_std.vcf; do
+    local FILE=${f##*/}
+    local BASE=${FILE%%_std*.*}
+
     rm -rf "$BASE"
     echo "$BASE"
     mkdir -p "$BASE"
