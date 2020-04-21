@@ -72,7 +72,8 @@ object Main {
                     .map(_.split(":"))
                     .map(s => ReportSheetPair(s.head, s.last))
             )
-
+            println("processing the following reports: ")
+            println(reportMetaData.reportSheetPairs.mkString("\n") + "\n")
             ReportManager.createReport(reportMetaData)
         }
 
