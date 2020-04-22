@@ -30,11 +30,11 @@ object ReportManager {
 
             case (rsPair, index) =>
 
-                val rawSheetName = "Raw" + rsPair.sheetName
+                val rawSheetName = ("raw" + rsPair.sheetName).map(_.toLower)
 
                 Truvari.duplicateReportTemplate(
                     rawSheetName,
-                    rsPair.sheetName,
+                    rsPair.sheetName.map(_.toLower),
                     index.toShort,
                     doc
                 )

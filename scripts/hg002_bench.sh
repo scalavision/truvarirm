@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# set -x
+set -x
 # the test for INS will fail and exit the script, need to find a better way of handling this
 # set -euo pipefail
 
@@ -78,8 +78,8 @@ runTruvari() {
   echo "REF: $REF"
   echo "SAMPLE_ID: $SAMPLE_ID"
 
-  rm -rf ./result
-  mkdir ./result
+#  rm -rf ./result
+#  mkdir ./result
 
   for f in "$SAMPLE_DIR"/*"${SAMPLE_ID}"*_std.vcf; do
     local FILE=${f##*/}
