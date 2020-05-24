@@ -24,6 +24,15 @@ val stdOptions = Seq(
 
 def extraOptions(scalaVersion: String) =
   CrossVersion.partialVersion(scalaVersion) match {
+    case Some((2, 13)) =>
+      Seq(
+        "-opt-warnings",
+        "-Ywarn-extra-implicit",
+        "-Ywarn-unused:_,imports",
+        "-Ywarn-unused:imports",
+        "-opt:l:inline",
+        "-opt-inline-from:<source>"
+      )
     case Some((2, 12)) =>
       Seq(
         "-opt-warnings",
@@ -43,7 +52,8 @@ def extraOptions(scalaVersion: String) =
 def stdSettings(prjName: String) = Seq(
     name := s"vcf-analytics4s",
     scalacOptions := stdOptions,
-    crossScalaVersions := Seq("2.12.8"),
+    scalaVersion := "2.13.2",
+//    crossScalaVersions := Seq("2.13.2"),
     maxErrors := 5,
     test in assembly := {},
     triggeredMessage := Watched.clearWhenTriggered,
@@ -51,14 +61,15 @@ def stdSettings(prjName: String) = Seq(
     scalacOptions := stdOptions ++ extraOptions(scalaVersion.value),
 //    libraryDependencies ++= compileOnlyDeps ++ testDeps ++ Seq(
     libraryDependencies ++= Seq(
-      compilerPlugin("org.spire-math"         %% "kind-projector"  % "0.9.7"),
-      compilerPlugin("com.github.tomasmikula" %% "pascal"          % "0.2.1"),
+      compilerPlugin("org.spire-math"         % "kind-projector_2.13"  % "0.11.0"),
+      compilerPlugin("com.github.tomasmikula" % "pascal_2.13"          % "0.4.0"),
       //compilerPlugin("com.github.ghik"        %% "silencer-plugin" % "1.0")
     ),
     incOptions ~= (_.withLogRecompileOnMacro(false))
 )
 
 lazy val projectName = "TruvariReportManager"
+lazy val ooVersion = "6.4.3"
 
 lazy val TruvariReportManager = project
   .in(file(projectName))
@@ -69,27 +80,27 @@ lazy val TruvariReportManager = project
     libraryDependencies ++= Seq(
       
       // OpenOffice libraries
-      "org.libreoffice" % "unoil" % "6.2.3",
-      "org.libreoffice" % "juh" % "6.2.3",
-      "org.libreoffice" % "officebean" % "6.2.3",
+      "org.libreoffice" % "unoil" % ooVersion,
+      "org.libreoffice" % "juh" % ooVersion,
+      "org.libreoffice" % "officebean" % ooVersion,
       // This seems to do the magic ...
-      "org.libreoffice" % "ridl" % "6.2.3",
+      "org.libreoffice" % "ridl" % ooVersion,
         // java.lang.NoClassDefFoundError: com/sun/star/comp/servicemanager/ServiceManager
-      "org.libreoffice" % "jurt" % "6.2.3",
-      "org.libreoffice" % "unoloader" % "6.2.3",
+      "org.libreoffice" % "jurt" % ooVersion,
+      "org.libreoffice" % "unoloader" % ooVersion,
       "com.github.jeremysolarz" % "bootstrap-connector" % "1.0.0",
       
       // Scala IO helpers
-      "com.lihaoyi" %% "sourcecode" % "0.1.4",
-      "com.lihaoyi" %% "pprint" % "0.5.3",
-      "com.lihaoyi" %% "os-lib" % "0.2.8",
+      "com.lihaoyi" %% "sourcecode" % "0.2.1",
+      "com.lihaoyi" %% "pprint" % "0.5.9",
+      "com.lihaoyi" %% "os-lib" % "0.7.0",
 
       // Testing libraries
-      "org.specs2" %% "specs2-core"          % "4.4.1" % Test,
-      "org.specs2" %% "specs2-scalacheck"    % "4.4.1" % Test,
-      "org.specs2" %% "specs2-matcher-extra" % "4.4.1" % Test,
-      "org.specs2" %% "specs2-scalaz"        % "4.4.1" % Test,
-      "dev.zio" %% "zio-test" % "1.0.0-RC11-1" % Test,
+      "org.specs2" %% "specs2-core"          % "4.9.4" % Test,
+      "org.specs2" %% "specs2-scalacheck"    % "4.9.4" % Test,
+      "org.specs2" %% "specs2-matcher-extra" % "4.9.4" % Test,
+      "org.specs2" %% "specs2-scalaz"        % "4.9.4" % Test
+//      "dev.zio" %% "zio-test" % "1.0.0-RC18-2" % Test,
       // Others that could be added if necessary
       //"org.typelevel" %%% "cats-effect-laws" % "1.1.0" % "test",
       // "co.fs2" %% "fs2-io" % "1.0.4",
